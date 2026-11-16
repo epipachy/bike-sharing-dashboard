@@ -47,8 +47,8 @@ Submission/
 **Keterangan:**
 
 - `data/`: Menyimpan dataset mentah.
-- `dashboard.py`: File utama untuk menjalankan dashboard Streamlit.
-- `main_data.csv`: Dataset hasil pengolahan yang digunakan oleh dashboard.
+- `dashboard/dashboard.py`: File utama untuk menjalankan dashboard Streamlit.
+- `dashboard/main_data.csv`: Dataset hasil pengolahan yang digunakan oleh dashboard.
 - `requirements.txt`: Daftar library dan dependensi proyek.
 - `notebook.ipynb`: Notebook untuk proses analisis data.
 - `README.md`: Dokumentasi proyek.
@@ -69,65 +69,34 @@ Beberapa tools dan library yang digunakan dalam proyek ini adalah:
 - **Google Colab**: Lingkungan untuk melakukan analisis data.
 
 ## Cara Menjalankan Dashboard
-
 Ikuti langkah-langkah berikut untuk menjalankan dashboard secara lokal.
 
 ### 1. Clone Repository
-
 Buka terminal atau PowerShell, kemudian jalankan:
-
-```bash
 git clone https://github.com/epipachy/bike-sharing-dashboard.git
-```
 
 ### 2. Masuk ke Direktori Proyek
-
-```bash
 cd bike-sharing-dashboard
-```
-
-Pastikan terminal berada di direktori yang sama dengan file `dashboard.py` dan `requirements.txt`.
-
+Pastikan terminal berada di direktori utama proyek (root repository), yaitu direktori yang berisi requirements.txt dan folder dashboard/.
 ### 3. Membuat Virtual Environment
-
 Buat virtual environment menggunakan perintah:
-
-```bash
 python -m venv .venv
-```
 
 ### 4. Mengaktifkan Virtual Environment
-
 **Windows (PowerShell):**
-
-```powershell
 .\.venv\Scripts\Activate.ps1
-```
 
 **Linux/macOS:**
-
-```bash
 source .venv/bin/activate
-```
 
 ### 5. Menginstal Dependensi
-
 Pastikan virtual environment sudah aktif dan terminal berada di direktori proyek yang berisi `requirements.txt`.
-
 Kemudian jalankan:
-
-```bash
 python -m pip install -r requirements.txt
-```
 
 ### 6. Menjalankan Dashboard
-
 Jalankan aplikasi Streamlit menggunakan perintah:
-
-```bash
 streamlit run dashboard/dashboard.py
-```
-
 Dashboard akan terbuka secara otomatis melalui browser. Jika tidak terbuka, akses alamat lokal yang ditampilkan pada terminal.
 
 ### 7. Pengujian Dashboard
