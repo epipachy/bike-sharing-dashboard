@@ -10,14 +10,15 @@ st.set_page_config(
     layout="wide"
 )
 
-
 DATA_PATH = Path(__file__).parent / "main_data.csv"
+
 
 @st.cache_data
 def load_data():
     df = pd.read_csv(DATA_PATH)
     df['date'] = pd.to_datetime(df['date'])
     return df
+
 
 try:
     df = load_data()
@@ -34,6 +35,8 @@ st.markdown(
 
 st.divider()
 
+
+# SIDEBAR FILTERS
 st.sidebar.header("Dashboard Filters")
 
 date_range = st.sidebar.date_input(
@@ -61,6 +64,8 @@ selected_weather = st.sidebar.selectbox(
     weather_options
 )
 
+
+# DATA FILTERING
 if len(date_range) == 2:
     start_date, end_date = date_range
 
@@ -82,6 +87,7 @@ if selected_weather != "All":
     ]
 
 
+# KEY PERFORMANCE INDICATORS
 st.subheader("Key Performance Indicators")
 
 if filtered_df.empty:
@@ -95,29 +101,15 @@ average_rentals = filtered_df['total_rentals'].mean()
 
 col1, col2, col3, col4 = st.columns(4)
 
-col1.metric(
-    "Total Rentals",
-    f"{total_rentals:,.0f}"
-)
-
-col2.metric(
-    "Average Rentals / Hour",
-    f"{average_rentals:,.1f}"
-)
-
-col3.metric(
-    "Casual Users",
-    f"{total_casual:,.0f}"
-)
-
-col4.metric(
-    "Registered Users",
-    f"{total_registered:,.0f}"
-)
+col1.metric("Total Rentals", f"{total_rentals:,.0f}")
+col2.metric("Average Rentals / Hour", f"{average_rentals:,.1f}")
+col3.metric("Casual Users", f"{total_casual:,.0f}")
+col4.metric("Registered Users", f"{total_registered:,.0f}")
 
 st.divider()
 
 
+# DAILY RENTAL TRENDS
 st.subheader("Daily Bike Rental Trends")
 
 daily_data = (
@@ -141,33 +133,50 @@ fig_daily = px.line(
 st.plotly_chart(fig_daily, use_container_width=True)
 
 
+# HOURLY RENTAL PATTERNS
 st.subheader("Hourly Rental Patterns")
 
-hourly_data = (
-    filtered_df.groupby('hour')['total_rentals']
-    .sum()
-    .reset_index()
-)
+if 'workingday' in filtered_df.columns:
+    hourly_data = (
+        filtered_df.groupby(['hour', 'workingday'])['total_rentals']
+        .mean()
+        .reset_index()
+    )
 
-fig_hourly = px.bar(
-    hourly_data,
-    x='hour',
-    y='total_rentals',
-    title="Total Bike Rentals by Hour",
-    labels={
-        'hour': 'Hour of Day',
-        'total_rentals': 'Total Rentals'
-    }
-)
+    hourly_data['Day Type'] = hourly_data['workingday'].map({
+        0: 'Non-Working Day',
+        1: 'Working Day'
+    })
 
-st.plotly_chart(fig_hourly, use_container_width=True)
+    fig_hourly = px.line(
+        hourly_data,
+        x='hour',
+        y='total_rentals',
+        color='Day Type',
+        markers=True,
+        title="Average Bike Rentals by Hour and Day Type",
+        labels={
+            'hour': 'Hour of Day',
+            'total_rentals': 'Average Rentals',
+            'Day Type': 'Day Type'
+        }
+    )
 
+    st.plotly_chart(fig_hourly, use_container_width=True)
+else:
+    st.warning(
+        "The workingday column is missing. "
+        "Hourly comparison by day type cannot be displayed."
+    )
+
+
+# SEASON AND WEATHER ANALYSIS
 col1, col2 = st.columns(2)
 
 with col1:
     season_data = (
         filtered_df.groupby('season_name')['total_rentals']
-        .sum()
+        .mean()
         .reset_index()
     )
 
@@ -175,19 +184,20 @@ with col1:
         season_data,
         x='season_name',
         y='total_rentals',
-        title="Bike Rentals by Season",
+        title="Average Bike Rentals by Season",
         labels={
             'season_name': 'Season',
-            'total_rentals': 'Total Rentals'
+            'total_rentals': 'Average Rentals'
         }
     )
 
     st.plotly_chart(fig_season, use_container_width=True)
 
+
 with col2:
     weather_data = (
         filtered_df.groupby('weather_name')['total_rentals']
-        .sum()
+        .mean()
         .reset_index()
     )
 
@@ -195,15 +205,55 @@ with col2:
         weather_data,
         x='weather_name',
         y='total_rentals',
-        title="Bike Rentals by Weather",
+        title="Average Bike Rentals by Weather",
         labels={
             'weather_name': 'Weather',
-            'total_rentals': 'Total Rentals'
+            'total_rentals': 'Average Rentals'
         }
     )
 
     st.plotly_chart(fig_weather, use_container_width=True)
 
+
+# MONTHLY RENTAL ANALYSIS
+st.subheader("Monthly Rental Patterns")
+
+monthly_daily_data = (
+    filtered_df.groupby('date')['total_rentals']
+    .sum()
+    .reset_index()
+)
+
+monthly_daily_data['month'] = monthly_daily_data['date'].dt.month
+monthly_daily_data['month_name'] = (
+    monthly_daily_data['date'].dt.strftime('%B')
+)
+
+monthly_data = (
+    monthly_daily_data.groupby(['month', 'month_name'])['total_rentals']
+    .mean()
+    .reset_index()
+    .sort_values('month')
+)
+
+fig_monthly = px.bar(
+    monthly_data,
+    x='month_name',
+    y='total_rentals',
+    title="Average Daily Bike Rentals by Month",
+    labels={
+        'month_name': 'Month',
+        'total_rentals': 'Average Daily Rentals'
+    },
+    category_orders={
+        'month_name': monthly_data['month_name'].tolist()
+    }
+)
+
+st.plotly_chart(fig_monthly, use_container_width=True)
+
+
+# USER TYPE DISTRIBUTION
 st.subheader("Rental Distribution by User Type")
 
 user_data = pd.DataFrame({
