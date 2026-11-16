@@ -125,7 +125,7 @@ python -m pip install -r requirements.txt
 Jalankan aplikasi Streamlit menggunakan perintah:
 
 ```bash
-streamlit run dashboard.py
+streamlit run dashboard/dashboard.py
 ```
 
 Dashboard akan terbuka secara otomatis melalui browser. Jika tidak terbuka, akses alamat lokal yang ditampilkan pada terminal.
@@ -152,7 +152,7 @@ Dashboard dikembangkan menggunakan Streamlit dan menyajikan beberapa informasi u
 
 **Link Dashboard Online:**
 
-https://bike-sharing-dashboard-gv2mrowv3xrtp9kwdlch8x.streamlit.app/
+https://bike-sharing-dashboard-x4gqhsprsxzzabdhnkbqcu.streamlit.app/
 
 ## Kesimpulan
 
