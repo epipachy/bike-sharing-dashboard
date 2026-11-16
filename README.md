@@ -19,13 +19,15 @@ Data `hour.csv` juga digunakan sebagai dasar pengolahan untuk menghasilkan `main
 
 ## Pertanyaan Analisis
 
-Proyek ini berfokus pada beberapa pertanyaan analisis berikut:
+Pertanyaan Analisis
 
-1. Bagaimana perubahan jumlah penyewaan sepeda dari waktu ke waktu?
-2. Pada jam berapa jumlah penyewaan sepeda mencapai titik tertinggi?
-3. Bagaimana pengaruh musim terhadap jumlah penyewaan sepeda?
-4. Bagaimana hubungan kondisi cuaca dengan aktivitas penyewaan sepeda?
-5. Bagaimana perbandingan jumlah pengguna kasual dan pengguna terdaftar?
+Proyek ini berfokus pada beberapa pertanyaan analisis berikut:
+1. Bagaimana tren penyewaan sepeda dari waktu ke waktu, dan bagaimana informasi tersebut dapat membantu perencanaan kebutuhan layanan?
+2. Bagaimana perbedaan pola penyewaan sepeda pada setiap jam antara working day dan non-working day, dan kapan penyedia layanan perlu meningkatkan ketersediaan sepeda?
+3. Bagaimana rata-rata penyewaan sepeda pada setiap musim, dan bagaimana informasi tersebut dapat digunakan untuk merencanakan ketersediaan armada?
+4. Bagaimana hubungan kondisi cuaca dengan rata-rata jumlah penyewaan sepeda, dan bagaimana informasi tersebut dapat membantu mengantisipasi perubahan permintaan?
+5. Bagaimana rata-rata penyewaan sepeda berbeda setiap bulan?
+6. Bagaimana perbandingan jumlah penyewaan oleh pengguna kasual dan pengguna terdaftar?
 
 ## Struktur Proyek
 
@@ -110,17 +112,17 @@ Setelah dashboard berhasil dijalankan, lakukan pengujian dengan memastikan:
 
 ## Dashboard Interaktif
 
-Dashboard dikembangkan menggunakan Streamlit dan menyajikan beberapa informasi utama, yaitu:
+- Dashboard dikembangkan menggunakan Streamlit dan menyajikan beberapa informasi utama, yaitu:
+- Statistik total penyewaan sepeda, rata-rata penyewaan per jam, serta jumlah pengguna kasual dan terdaftar.
+- Tren total penyewaan sepeda berdasarkan tanggal.
+- Perbandingan rata-rata penyewaan sepeda per jam antara working day dan non-working day.
+- Perbandingan rata-rata penyewaan sepeda berdasarkan musim.
+- Perbandingan rata-rata penyewaan sepeda berdasarkan kondisi cuaca.
+- Rata-rata penyewaan sepeda harian berdasarkan bulan.
+- Distribusi penyewaan sepeda oleh pengguna kasual dan pengguna terdaftar.
+Dashboard juga dilengkapi dengan filter interaktif berdasarkan rentang tanggal, musim, dan kondisi cuaca.
 
-- Statistik total penyewaan sepeda.
-- Tren penyewaan sepeda berdasarkan tanggal.
-- Distribusi penyewaan berdasarkan jam.
-- Perbandingan penyewaan berdasarkan musim.
-- Perbandingan penyewaan berdasarkan kondisi cuaca.
-- Perbandingan pengguna kasual dan pengguna terdaftar.
-
-**Link Dashboard Online:**
-
+Link Dashboard Online:
 https://bike-sharing-dashboard-x4gqhsprsxzzabdhnkbqcu.streamlit.app/
 
 ## Kesimpulan
